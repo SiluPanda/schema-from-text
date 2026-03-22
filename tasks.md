@@ -2,14 +2,14 @@
 
 ## Phase 1: Project Setup and Scaffolding
 
-- [ ] **Install development dependencies** — Add `typescript`, `vitest`, `eslint`, and related config to `devDependencies` in `package.json`. Ensure `tsconfig.json` compiles correctly with `npm run build`. | Status: not_done
+- [x] **Install development dependencies** — Add `typescript`, `vitest`, `eslint`, and related config to `devDependencies` in `package.json`. Ensure `tsconfig.json` compiles correctly with `npm run build`. | Status: done
 - [ ] **Add peer dependency for Zod** — Add `zod ^3.22.0` as an optional peer dependency in `package.json` under `peerDependencies` and `peerDependenciesMeta` with `"optional": true`. | Status: not_done
 - [ ] **Create directory structure** — Create the following directories under `src/`: `pipeline/`, `validate/`, `prompts/`. Create the `__tests__/` directory at the project root. Matches the file structure specified in SPEC Section 19. | Status: not_done
 - [ ] **Define type definitions in `src/types.ts`** — Implement all TypeScript types and interfaces specified in SPEC Section 11: `LLMFunction`, `OutputFormat`, `GenerateOptions`, `RefineOptions`, `GeneratorConfig`, `ValidationResult`, `AttemptRecord`, `SchemaResultBase`, `ZodResult`, `JSONSchemaResult`, `TypeScriptResult`, `AllFormatsResult`, `SchemaResult`. | Status: not_done
-- [ ] **Set up `src/index.ts` with public API exports** — Export `generateSchema`, `generateZod`, `generateJSONSchema`, `generateTypeScript`, `refine`, `createGenerator`, and all public types from `src/index.ts`. Initially these can be stubs that throw "not implemented" errors. | Status: not_done
+- [x] **Set up `src/index.ts` with public API exports** — Export `generateSchema`, `generateZod`, `generateJSONSchema`, `generateTypeScript`, `refine`, `createGenerator`, and all public types from `src/index.ts`. Initially these can be stubs that throw "not implemented" errors. | Status: done
 - [ ] **Add CLI binary entry point to `package.json`** — Add `"bin": { "schema-from-text": "./dist/cli.js" }` to `package.json`. Ensure the CLI file will have a `#!/usr/bin/env node` shebang. | Status: not_done
-- [ ] **Configure vitest** — Add a `vitest.config.ts` (or inline vitest config in `package.json`) so that `npm run test` runs tests from `__tests__/`. | Status: not_done
-- [ ] **Configure ESLint** — Add an ESLint config (e.g., `.eslintrc.json` or `eslint.config.js`) appropriate for TypeScript. Ensure `npm run lint` works. | Status: not_done
+- [x] **Configure vitest** — Add a `vitest.config.ts` (or inline vitest config in `package.json`) so that `npm run test` runs tests from `__tests__/`. | Status: done
+- [x] **Configure ESLint** — Add an ESLint config (e.g., `.eslintrc.json` or `eslint.config.js`) appropriate for TypeScript. Ensure `npm run lint` works. | Status: done
 
 ## Phase 2: Pipeline Infrastructure
 
@@ -22,17 +22,17 @@
 
 ### Step 4 — Output Extraction (`src/pipeline/extract.ts`)
 
-- [ ] **Implement markdown fence stripping** — Detect and strip markdown code fences (`` ```typescript ``, `` ```json ``, `` ```ts ``, bare `` ``` ``). Extract the content inside the fences. Handle multiple fences (take the first/most relevant). | Status: not_done
-- [ ] **Implement JSON extraction** — For JSON Schema output, extract a JSON object from surrounding prose using bracket matching (find the first `{`, match to its closing `}`). Handle nested braces correctly. | Status: not_done
+- [x] **Implement markdown fence stripping** — Detect and strip markdown code fences (`` ```typescript ``, `` ```json ``, `` ```ts ``, bare `` ``` ``). Extract the content inside the fences. Handle multiple fences (take the first/most relevant). | Status: done
+- [x] **Implement JSON extraction** — For JSON Schema output, extract a JSON object from surrounding prose using bracket matching (find the first `{`, match to its closing `}`). Handle nested braces correctly. | Status: done
 - [ ] **Implement prose removal for code output** — For Zod and TypeScript output, identify the code portion by looking for lines starting with `z.`, `import`, `interface`, `type`, or `export`. Strip leading prose like "Here is the schema:". | Status: not_done
 - [ ] **Implement trailing content removal** — Remove any text after the schema (explanations, notes, usage examples) by detecting the end of the schema code/JSON. | Status: not_done
-- [ ] **Write unit tests for output extraction** — Test each extraction case: fenced code, JSON embedded in prose, Zod code with leading prose, TypeScript with trailing explanation, clean output with no extraction needed. File: `__tests__/extract.test.ts`. | Status: not_done
+- [x] **Write unit tests for output extraction** — Test each extraction case: fenced code, JSON embedded in prose, Zod code with leading prose, TypeScript with trailing explanation, clean output with no extraction needed. File: `__tests__/extract.test.ts`. | Status: done
 
 ### Steps 6-7 — Error Formatting and Retry (`src/pipeline/retry.ts`)
 
-- [ ] **Implement error feedback message construction** — Given a list of validation errors, the invalid output string, the original description, and the output format, construct a retry prompt following the template in SPEC Section 5 Step 7. Include: numbered error list, the invalid output, correction request, original description, output-only instruction. | Status: not_done
-- [ ] **Implement retry loop logic** — Execute the LLM call, validate, and retry cycle. Track each attempt in an `AttemptRecord`. Respect `maxRetries` (default 3). Return the final `SchemaResult` with all attempt records. | Status: not_done
-- [ ] **Implement AbortSignal support in retry loop** — Check `signal.aborted` before each LLM call. If aborted, return a failure result indicating cancellation. | Status: not_done
+- [x] **Implement error feedback message construction** — Given a list of validation errors, the invalid output string, the original description, and the output format, construct a retry prompt following the template in SPEC Section 5 Step 7. Include: numbered error list, the invalid output, correction request, original description, output-only instruction. | Status: done
+- [x] **Implement retry loop logic** — Execute the LLM call, validate, and retry cycle. Track each attempt in an `AttemptRecord`. Respect `maxRetries` (default 3). Return the final `SchemaResult` with all attempt records. | Status: done
+- [x] **Implement AbortSignal support in retry loop** — Check `signal.aborted` before each LLM call. If aborted, return a failure result indicating cancellation. | Status: done
 - [ ] **Write unit tests for retry logic** — Test: error feedback message format contains errors and output; retry loop stops on success; retry loop exhausts max retries; attempt records are correctly populated; AbortSignal cancellation. File: `__tests__/retry.test.ts`. | Status: not_done
 
 ## Phase 3: Prompts
@@ -57,42 +57,42 @@
 
 ### Zod Code Validator (`src/validate/zod-validator.ts`)
 
-- [ ] **Implement balanced delimiter checking** — Verify every `(` has a matching `)`, every `{` has a `}`, every `[` has a `]`. Return position-specific error messages for unmatched delimiters. | Status: not_done
+- [x] **Implement balanced delimiter checking** — Verify every `(` has a matching `)`, every `{` has a `}`, every `[` has a `]`. Return position-specific error messages for unmatched delimiters. | Status: done
 - [ ] **Implement valid Zod method chain checking** — Verify that method calls after `z.` use known Zod method names. Flag unknown methods like `z.text()`, `z.integer()`. Check chainable methods are valid. | Status: not_done
 - [ ] **Implement argument type checking** — Verify string arguments to `z.enum()` and `z.literal()` are valid string literals. Verify numeric arguments to `.min()` and `.max()` are valid numbers. | Status: not_done
 - [ ] **Implement stray token detection** — Verify the expression ends cleanly after the final closing delimiter. Detect trailing prose, semicolons, or additional statements. | Status: not_done
 - [ ] **Implement eval-based validation mode** — When `validate: 'eval'` is set, evaluate the code string using `new Function()` in a sandboxed scope where only `z` (the Zod library) is available. Catch runtime errors (`.email()` on number, empty enum array, etc.). Throw a clear error at configuration time if `zod` is not installed. Restrict scope: no `process`, `require`, `import`, `globalThis`, `fetch`. | Status: not_done
-- [ ] **Write unit tests for Zod validator** — Test valid Zod expressions pass. Test unmatched parens fail with position. Test unknown methods fail. Test invalid arguments fail. Test stray tokens fail. Test eval mode catches runtime errors. Test eval mode error when zod not installed. File: `__tests__/validate-zod.test.ts`. | Status: not_done
+- [x] **Write unit tests for Zod validator** — Test valid Zod expressions pass. Test unmatched parens fail with position. Test unknown methods fail. Test invalid arguments fail. Test stray tokens fail. Test eval mode catches runtime errors. Test eval mode error when zod not installed. File: `__tests__/validate-zod.test.ts`. | Status: done
 
 ### JSON Schema Validator (`src/validate/json-schema-validator.ts`)
 
-- [ ] **Implement JSON parse validation** — Attempt `JSON.parse` on the output. Return clear error on malformed JSON (trailing commas, unquoted keys, single quotes). | Status: not_done
-- [ ] **Implement root type validation** — Check the root schema has a `type` property with a valid JSON Schema type value (`"object"`, `"array"`, `"string"`, `"number"`, `"integer"`, `"boolean"`, `"null"`) or a composition keyword (`anyOf`, `oneOf`, `allOf`). | Status: not_done
+- [x] **Implement JSON parse validation** — Attempt `JSON.parse` on the output. Return clear error on malformed JSON (trailing commas, unquoted keys, single quotes). | Status: done
+- [x] **Implement root type validation** — Check the root schema has a `type` property with a valid JSON Schema type value (`"object"`, `"array"`, `"string"`, `"number"`, `"integer"`, `"boolean"`, `"null"`) or a composition keyword (`anyOf`, `oneOf`, `allOf`). | Status: done
 - [ ] **Implement object schema structure validation** — If `type` is `"object"`, check `properties` is an object (if present), `required` is an array of strings (if present), and every string in `required` exists as a key in `properties`. | Status: not_done
 - [ ] **Implement array schema structure validation** — If `type` is `"array"`, check `items` is present and is a valid schema. | Status: not_done
 - [ ] **Implement enum validation** — If `enum` is present, check it is a non-empty array. | Status: not_done
 - [ ] **Implement recursive nested schema validation** — Recursively validate every schema in `properties`, `items`, `anyOf`, `oneOf`, `allOf`, `$defs`, and `definitions`. | Status: not_done
 - [ ] **Implement `$ref` resolution validation** — If `$ref` is present, check it points to a path that exists in `$defs` or `definitions`. | Status: not_done
-- [ ] **Write unit tests for JSON Schema validator** — Test valid schemas pass. Test malformed JSON fails. Test invalid root type fails. Test `required` referencing non-existent property fails. Test array without `items` fails. Test empty enum fails. Test invalid nested schemas fail. Test broken `$ref` fails. File: `__tests__/validate-json-schema.test.ts`. | Status: not_done
+- [x] **Write unit tests for JSON Schema validator** — Test valid schemas pass. Test malformed JSON fails. Test invalid root type fails. Test `required` referencing non-existent property fails. Test array without `items` fails. Test empty enum fails. Test invalid nested schemas fail. Test broken `$ref` fails. File: `__tests__/validate-json-schema.test.ts`. | Status: done
 
 ### TypeScript Type Validator (`src/validate/typescript-validator.ts`)
 
-- [ ] **Implement declaration keyword check** — Verify the output starts with `interface`, `type`, or `export` (followed by `interface` or `type`). | Status: not_done
-- [ ] **Implement balanced braces check** — Verify every `{` has a matching `}`, `[` has `]`, `<` has `>`. | Status: not_done
+- [x] **Implement declaration keyword check** — Verify the output starts with `interface`, `type`, or `export` (followed by `interface` or `type`). | Status: done
+- [x] **Implement balanced braces check** — Verify every `{` has a matching `}`, `[` has `]`, `<` has `>`. | Status: done
 - [ ] **Implement property syntax check** — Inside an interface body, verify each line matches `name: Type;` or `name?: Type;` with allowances for multiline types, generics, and inline object types. | Status: not_done
 - [ ] **Implement type expression validation** — Verify type expressions use valid TypeScript types: primitives, array types (`T[]`, `Array<T>`), union types (`A | B`), intersection types (`A & B`), literal types, tuple types, object types. | Status: not_done
 - [ ] **Implement multiple declaration support** — Handle output containing multiple `interface`/`type` declarations; validate each individually. | Status: not_done
-- [ ] **Write unit tests for TypeScript validator** — Test valid interfaces pass. Test valid type aliases pass. Test missing declaration keyword fails. Test unbalanced braces fail. Test invalid property syntax fails. Test multiple declarations pass individually. File: `__tests__/validate-typescript.test.ts`. | Status: not_done
+- [x] **Write unit tests for TypeScript validator** — Test valid interfaces pass. Test valid type aliases pass. Test missing declaration keyword fails. Test unbalanced braces fail. Test invalid property syntax fails. Test multiple declarations pass individually. File: `__tests__/validate-typescript.test.ts`. | Status: done
 
 ## Phase 5: Core Generation Functions
 
-- [ ] **Implement `generateZod` (`src/generate.ts`)** — Implement the full pipeline for Zod generation: parse description, build Zod-specific prompt, call LLM, extract output, validate with Zod validator (syntax or eval mode per config), retry on failure with error feedback, return `ZodResult`. Default format is Zod. | Status: not_done
-- [ ] **Implement `generateJSONSchema` (`src/generate.ts`)** — Implement the full pipeline for JSON Schema generation: parse description, build JSON Schema-specific prompt (with draft version config), call LLM, extract output (JSON extraction), validate with JSON Schema validator, retry, return `JSONSchemaResult`. | Status: not_done
-- [ ] **Implement `generateTypeScript` (`src/generate.ts`)** — Implement the full pipeline for TypeScript generation: parse description, build TypeScript-specific prompt, call LLM, extract output, validate with TypeScript validator, retry, return `TypeScriptResult`. | Status: not_done
-- [ ] **Implement `generateSchema` (`src/generate.ts`)** — Implement the unified entry point that delegates to `generateZod`, `generateJSONSchema`, or `generateTypeScript` based on the `format` option. Default format is `"zod"`. | Status: not_done
-- [ ] **Implement `format: 'all'` support in `generateSchema`** — When `format: 'all'` is specified, make three sequential LLM calls (one per format), and return an `AllFormatsResult` with `zod`, `jsonSchema`, and `typescript` fields. Mark overall `success` based on individual results. | Status: not_done
+- [x] **Implement `generateZod` (`src/generate.ts`)** — Implement the full pipeline for Zod generation: parse description, build Zod-specific prompt, call LLM, extract output, validate with Zod validator (syntax or eval mode per config), retry on failure with error feedback, return `ZodResult`. Default format is Zod. | Status: done
+- [x] **Implement `generateJSONSchema` (`src/generate.ts`)** — Implement the full pipeline for JSON Schema generation: parse description, build JSON Schema-specific prompt (with draft version config), call LLM, extract output (JSON extraction), validate with JSON Schema validator, retry, return `JSONSchemaResult`. | Status: done
+- [x] **Implement `generateTypeScript` (`src/generate.ts`)** — Implement the full pipeline for TypeScript generation: parse description, build TypeScript-specific prompt, call LLM, extract output, validate with TypeScript validator, retry, return `TypeScriptResult`. | Status: done
+- [x] **Implement `generateSchema` (`src/generate.ts`)** — Implement the unified entry point that delegates to `generateZod`, `generateJSONSchema`, or `generateTypeScript` based on the `format` option. Default format is `"zod"`. | Status: done
+- [x] **Implement `format: 'all'` support in `generateSchema`** — When `format: 'all'` is specified, make three sequential LLM calls (one per format), and return an `AllFormatsResult` with `zod`, `jsonSchema`, and `typescript` fields. Mark overall `success` based on individual results. | Status: done
 - [ ] **Implement custom validator support** — After built-in validation passes, run the caller-provided `validator` function (if provided) on the extracted output. If it returns `{ valid: false, errors: [...] }`, treat as validation failure and trigger retry. | Status: not_done
-- [ ] **Write unit tests for generation functions** — Test with mock LLM: successful generation for each format, correct prompt construction, correct result structure, custom validator integration, `format: 'all'` behavior. File: `__tests__/generate.test.ts`. | Status: not_done
+- [x] **Write unit tests for generation functions** — Test with mock LLM: successful generation for each format, correct prompt construction, correct result structure, custom validator integration, `format: 'all'` behavior. File: `__tests__/generate.test.ts`. | Status: done
 
 ## Phase 6: Refinement
 
@@ -102,8 +102,8 @@
 
 ## Phase 7: Factory
 
-- [ ] **Implement `createGenerator` factory (`src/factory.ts`)** — Return a `SchemaGenerator` object with `generate()` and `refine()` methods. Store default config (`llm`, `format`, `maxRetries`, `validate`, `jsonSchemaDraft`). Merge per-call options with stored config using the precedence: built-in defaults < factory config < per-call options. | Status: not_done
-- [ ] **Write unit tests for factory** — Test config precedence (factory defaults overridden by per-call options). Test `generate()` delegates to `generateSchema`. Test `refine()` delegates to `refine`. Test multiple calls with different options. File: `__tests__/factory.test.ts`. | Status: not_done
+- [x] **Implement `createGenerator` factory (`src/factory.ts`)** — Return a `SchemaGenerator` object with `generate()` and `refine()` methods. Store default config (`llm`, `format`, `maxRetries`, `validate`, `jsonSchemaDraft`). Merge per-call options with stored config using the precedence: built-in defaults < factory config < per-call options. | Status: done
+- [x] **Write unit tests for factory** — Test config precedence (factory defaults overridden by per-call options). Test `generate()` delegates to `generateSchema`. Test `refine()` delegates to `refine`. Test multiple calls with different options. File: `__tests__/factory.test.ts`. | Status: done
 
 ## Phase 8: Integration Tests
 

@@ -3,6 +3,7 @@
 Generate Zod schemas, JSON Schemas, and TypeScript type declarations from natural language descriptions using any LLM.
 
 [![npm version](https://img.shields.io/npm/v/schema-from-text.svg)](https://www.npmjs.com/package/schema-from-text)
+[![npm downloads](https://img.shields.io/npm/dt/schema-from-text.svg)](https://www.npmjs.com/package/schema-from-text)
 [![license](https://img.shields.io/npm/l/schema-from-text.svg)](https://github.com/SiluPanda/schema-from-text/blob/master/LICENSE)
 [![node](https://img.shields.io/node/v/schema-from-text.svg)](https://nodejs.org)
 

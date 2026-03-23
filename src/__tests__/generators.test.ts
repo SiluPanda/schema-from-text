@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
-import { generateZod, generateJSONSchema, generateTypeScript, createGenerator } from '../index'
+import { generateZod, generateJSONSchema, generateTypeScript, generateSchema, createGenerator } from '../index'
+import type { AllFormatsResult } from '../types'
 
 const validZodResponse = '```typescript\nz.object({ name: z.string(), age: z.number() })\n```'
 const validJSONSchemaResponse = '```json\n{"type":"object","properties":{"name":{"type":"string"}}}\n```'
@@ -116,5 +117,29 @@ describe('createGenerator', () => {
     const generator = createGenerator({ llm })
     const result = await generator.generateTypeScript('A user entity')
     expect(result.format).toBe('typescript')
+  })
+})
+
+describe('generateSchema', () => {
+  it('dispatches to zod by default', async () => {
+    const llm = vi.fn().mockResolvedValue(validZodResponse)
+    const result = await generateSchema('A user', { llm })
+    expect(result.format).toBe('zod')
+  })
+
+  it('format: all returns AllFormatsResult with format field', async () => {
+    const llm = vi.fn()
+      .mockResolvedValue(validZodResponse)
+      .mockResolvedValue(validJSONSchemaResponse)
+      .mockResolvedValue(validTypeScriptResponse)
+
+    const result = await generateSchema('A user', { llm, format: 'all' }) as AllFormatsResult
+    expect(result.format).toBe('all')
+    expect(result.zod).toBeDefined()
+    expect(result.zod.format).toBe('zod')
+    expect(result.jsonSchema).toBeDefined()
+    expect(result.jsonSchema.format).toBe('json-schema')
+    expect(result.typescript).toBeDefined()
+    expect(result.typescript.format).toBe('typescript')
   })
 })

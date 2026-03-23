@@ -76,5 +76,5 @@ export async function generateAll(description: string, options: GenerateOptions)
     generateJSONSchema(description, options),
     generateTypeScript(description, options),
   ])
-  return { zod, jsonSchema, typescript }
+  return { format: 'all', zod, jsonSchema, typescript }
 }

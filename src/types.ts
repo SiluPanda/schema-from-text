@@ -40,6 +40,7 @@ export interface TypeScriptResult {
 }
 
 export interface AllFormatsResult {
+  format: 'all'
   zod: ZodResult
   jsonSchema: JSONSchemaResult
   typescript: TypeScriptResult

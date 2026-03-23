@@ -1,6 +1,6 @@
 {
   "name": "schema-from-text",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Generate Zod schemas from natural language descriptions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
